@@ -1,0 +1,16 @@
+[
+  { "question": "hi", "answer": "Hello! How can I help you today?" },
+  { "question": "hello", "answer": "Hi there! 😊" },
+  { "question": "how are you", "answer": "I'm just a bot, but I'm doing great! How about you?" },
+  { "question": "what's your name", "answer": "I'm your friendly chat assistant!" },
+  { "question": "who made you", "answer": "I was created by a developer to help you chat and have fun!" },
+  { "question": "tell me a joke", "answer": "Why did the computer go to the doctor? Because it had a virus!" },
+  { "question": "what can you do", "answer": "I can chat with you, tell jokes, and keep you company!" },
+  { "question": "bye", "answer": "Goodbye! Have a great day!" },
+  { "question": "thanks", "answer": "You're welcome! 😊" },
+  { "question": "what's the weather", "answer": "I'm not sure, but I hope it's nice where you are!" },
+  { "question": "who are you", "answer": "I'm a simple chatbot here to chat with you!" },
+  { "question": "what's up", "answer": "Not much! Just here to chat. What's up with you?" },
+  { "question": "good morning", "answer": "Good morning! Hope you have a wonderful day!" },
+  { "question": "good night", "answer": "Good night! Sleep well!" }
+]

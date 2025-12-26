@@ -96,6 +96,13 @@ function Register() {
           >
             Sign Up
           </button>
+          <button
+            type="button"
+            className="w-full rounded-lg border border-indigo-200 bg-white px-3 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-50 dark:border-slate-700 dark:bg-slate-900 dark:text-pink-300 dark:hover:bg-slate-800"
+            onClick={() => navigate('/login')}
+          >
+            Have an account? Log in
+          </button>
         </form>
       </div>
     </div>

@@ -104,6 +104,15 @@ const normalizeMediaUrl = (url) => {
   return url
 }
 
+function shuffleArray(list) {
+  const arr = [...list]
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
 function StoryStrip() {
   return (
     <div className="flex gap-3 overflow-x-auto pb-1">
@@ -204,6 +213,8 @@ function Feed() {
         (post.hashtags && post.hashtags.some((tag) => tag.toLowerCase().includes(term))),
     )
   }, [posts, searchTerm])
+
+  const shuffledPosts = useMemo(() => shuffleArray(filteredPosts), [filteredPosts])
 
   // Example trending hashtags
   const trendingHashtags = [
@@ -350,7 +361,7 @@ function Feed() {
         )}
 
         {!loading && !error &&
-          filteredPosts.map((post) => (
+          shuffledPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
       </section>

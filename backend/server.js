@@ -25,25 +25,14 @@ mongoose.connection.on('error', (err) => {
   console.error('MongoDB connection error:', err);
 });
 
-// Auth routes
-app.use('/api/auth', authRouter);
 // API routes
+app.use('/api/auth', authRouter);
 app.use('/api/reels', reelsRouter);
 app.use('/api/posts', require('./routes/posts'));
 
-// Serve frontend static files (if dist exists)
-const distPath = path.join(__dirname, '../frontend/dist');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-}
-
-app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../frontend/dist/index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(200).json({ message: 'Backend API is running. Frontend not available.' });
-  }
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Backend API is running' });
 });
 
 app.listen(PORT, () => {

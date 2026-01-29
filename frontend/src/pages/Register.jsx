@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-const API_URL = import.meta.env.VITE_API_URL
+import { AuthService } from '../services/api.jsx'
 
 function Register() {
   const [username, setUsername] = useState('')
@@ -14,16 +13,10 @@ function Register() {
     e.preventDefault()
     setError('')
     try {
-      const res = await fetch(`${API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Registration failed')
+      await AuthService.register({ username, email, password })
       navigate('/login')
     } catch (err) {
-      setError(err.message)
+      setError(err.message || 'Registration failed')
     }
   }
 

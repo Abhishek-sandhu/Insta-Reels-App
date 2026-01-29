@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
-
-const API_URL = import.meta.env.VITE_API_URL
+import { PostService } from '../services/PostService'
 
 function Backdrop({ children, onClose }) {
   return (
@@ -62,31 +61,17 @@ function CreatePostModal({ open, onClose }) {
       if (!useUrl) {
         const formData = new FormData();
         formData.append('media', mediaFile);
-        const uploadRes = await fetch(`${API_URL}/api/posts/upload`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        });
-        const uploadData = await uploadRes.json();
-        if (!uploadRes.ok || !uploadData.url) throw new Error('Failed to upload media');
+        const { data: uploadData } = await PostService.uploadMedia(formData);
+        if (!uploadData.url) throw new Error('Failed to upload media');
         finalMediaUrl = uploadData.url;
       }
 
       const tags = hashtags.split(/[#\s]+/).filter(Boolean);
-      const res = await fetch(`${API_URL}/api/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          type: previewType,
-          mediaUrl: finalMediaUrl,
-          caption,
-          hashtags: tags,
-        }),
+      await PostService.create({
+        type: previewType,
+        mediaUrl: finalMediaUrl,
+        caption,
+        hashtags: tags,
       });
       if (!res.ok) throw new Error('Failed to create post');
       setLoading(false);

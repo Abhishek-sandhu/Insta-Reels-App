@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-
-const API_URL = import.meta.env.VITE_API_URL
+import { AuthService } from '../services/api.jsx'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -15,17 +14,11 @@ function Login() {
     e.preventDefault()
     setError('')
     try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Login failed')
+      const { data } = await AuthService.login({ username, password })
       login(data.user, data.token)
       navigate('/')
     } catch (err) {
-      setError(err.message)
+      setError(err.message || 'Login failed')
     }
   }
 

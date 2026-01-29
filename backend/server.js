@@ -30,9 +30,16 @@ app.use('/api/auth', authRouter);
 app.use('/api/reels', reelsRouter);
 app.use('/api/posts', require('./routes/posts'));
 
-// Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Backend API is running' });
+// Serve frontend static files
+const distPath = path.join(__dirname, '../frontend/dist');
+app.use(express.static(distPath));
+
+// Catch-all handler: send back index.html for client-side routing
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(PORT, () => {

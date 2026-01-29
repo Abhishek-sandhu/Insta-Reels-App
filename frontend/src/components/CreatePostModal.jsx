@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 function Backdrop({ children, onClose }) {
   return (
     <motion.div
@@ -60,7 +62,7 @@ function CreatePostModal({ open, onClose }) {
       if (!useUrl) {
         const formData = new FormData();
         formData.append('media', mediaFile);
-        const uploadRes = await fetch('/api/posts/upload', {
+        const uploadRes = await fetch(`${API_URL}/api/posts/upload`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,7 +75,7 @@ function CreatePostModal({ open, onClose }) {
       }
 
       const tags = hashtags.split(/[#\s]+/).filter(Boolean);
-      const res = await fetch('/api/posts', {
+      const res = await fetch(`${API_URL}/api/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

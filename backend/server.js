@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/insta_reels');
+mongoose.connect(process.env.MONGODB_URI);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const Post = require('./models/Post');
+require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/insta_reels');
+mongoose.connect(process.env.MONGODB_URI);
 
 async function cleanPosts() {
   const posts = await Post.find();
